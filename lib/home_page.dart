@@ -125,10 +125,10 @@ class _HomePageState extends State<HomePage> {
     color: $fg;
     background-color: $bg;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.45;
     word-wrap: break-word;
-    padding: 0 16px 24px;
+    padding: 0 14px 18px;
   }
   .markdown-body a { background-color: transparent; color: $accent; text-decoration: none; }
   .markdown-body a:hover { text-decoration: underline; }
@@ -136,49 +136,49 @@ class _HomePageState extends State<HomePage> {
   .markdown-body b, .markdown-body strong { font-weight: 600; }
   .markdown-body dfn { font-style: italic; }
   .markdown-body h1 {
-    margin: .67em 0;
+    margin: .6em 0 .3em;
     font-weight: 600;
-    padding-bottom: .3em;
-    font-size: 2em;
+    padding-bottom: .25em;
+    font-size: 1.7em;
     border-bottom: 1px solid $borderMuted;
   }
   .markdown-body h2 {
     font-weight: 600;
-    padding-bottom: .3em;
-    font-size: 1.5em;
+    padding-bottom: .25em;
+    font-size: 1.35em;
     border-bottom: 1px solid $borderMuted;
   }
-  .markdown-body h3 { font-weight: 600; font-size: 1.25em; }
+  .markdown-body h3 { font-weight: 600; font-size: 1.15em; }
   .markdown-body h4 { font-weight: 600; font-size: 1em; }
   .markdown-body h5 { font-weight: 600; font-size: .875em; }
   .markdown-body h6 { font-weight: 600; font-size: .85em; color: $fgMuted; }
   .markdown-body h1, .markdown-body h2, .markdown-body h3,
   .markdown-body h4, .markdown-body h5, .markdown-body h6 {
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    margin-top: 1.2rem;
+    margin-bottom: .5rem;
     line-height: 1.25;
   }
-  .markdown-body p { margin-top: 0; margin-bottom: 10px; }
+  .markdown-body p { margin-top: 0; margin-bottom: 8px; }
   .markdown-body blockquote {
-    margin: 0; padding: 0 1em;
+    margin: 0; padding: 0 .8em;
     color: $fgMuted;
-    border-left: .25em solid $border;
+    border-left: .2em solid $border;
   }
   .markdown-body ul, .markdown-body ol {
     margin-top: 0; margin-bottom: 0;
-    padding-left: 2em;
+    padding-left: 1.5em;
   }
   .markdown-body ul ul, .markdown-body ul ol,
   .markdown-body ol ol, .markdown-body ol ul {
     margin-top: 0; margin-bottom: 0;
   }
-  .markdown-body li+li { margin-top: .25em; }
-  .markdown-body li>p { margin-top: 1rem; }
+  .markdown-body li+li { margin-top: .15em; }
+  .markdown-body li>p { margin-top: .6rem; }
   .markdown-body hr {
     box-sizing: content-box; overflow: hidden;
     background: transparent;
     border-bottom: 1px solid $borderMuted;
-    height: .25em; padding: 0; margin: 1.5rem 0;
+    height: .2em; padding: 0; margin: 1rem 0;
     background-color: $border; border: 0;
   }
   .markdown-body img {
@@ -187,19 +187,19 @@ class _HomePageState extends State<HomePage> {
   }
   .markdown-body code {
     font-family: "SF Mono", "Fira Code", Consolas, "Liberation Mono", monospace;
-    font-size: 85%;
-    padding: .2em .4em;
+    font-size: 80%;
+    padding: .15em .35em;
     margin: 0;
     white-space: break-spaces;
     background-color: $codeBg;
-    border-radius: 6px;
+    border-radius: 4px;
   }
   .markdown-body pre {
     margin-top: 0; margin-bottom: 0;
-    padding: 1rem;
+    padding: .75rem;
     overflow: auto;
-    font-size: 85%;
-    line-height: 1.45;
+    font-size: 80%;
+    line-height: 1.4;
     color: $fg;
     background-color: $bgMuted;
     border-radius: 6px;
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
     line-height: inherit;
   }
 
-  /* ═══════ Tables — nowrap + self-scrolling ═══════ */
+  /* ─── Tables — compact, nowrap, auto-scroll ─── */
   .markdown-body table {
     border-spacing: 0;
     border-collapse: collapse;
@@ -223,11 +223,11 @@ class _HomePageState extends State<HomePage> {
     overflow: auto;
     font-variant: tabular-nums;
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: .8rem;
   }
   .markdown-body table th,
   .markdown-body table td {
-    padding: 6px 13px;
+    padding: 4px 9px;
     border: 1px solid $border;
     white-space: nowrap;
   }
@@ -241,7 +241,7 @@ class _HomePageState extends State<HomePage> {
   }
   .markdown-body table td>:last-child { margin-bottom: 0; }
 
-  /* Table code — don't let code's break-spaces override td's nowrap */
+  /* Table code — override code's break-spaces */
   .markdown-body table th code,
   .markdown-body table td code {
     white-space: nowrap;
