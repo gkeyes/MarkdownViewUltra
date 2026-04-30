@@ -12,10 +12,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_markdown: ^0.7.7
-  url_launcher: ^6.3.2
+  markdown: ^7.3.1
+  webview_flutter: ^4.10.0
   path_provider: ^2.1.5
-  google_fonts: ^8.0.2
 
 dev_dependencies:
   flutter_lints: ^6.0.0
