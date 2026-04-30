@@ -3,12 +3,10 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 
     <application
         android:label="Markdown View"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true"
         android:requestLegacyExternalStorage="true">
 
@@ -27,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <!-- Handle "Open with" / "Share" for .md files -->
+            <!-- Handle "Open with" for .md files -->
             <intent-filter android:label="Preview with Markdown View">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -38,7 +36,6 @@
                 <data android:scheme="content" android:pathPattern=".*\\.md"/>
             </intent-filter>
 
-            <!-- Also handle text/plain as fallback -->
             <intent-filter android:label="Preview with Markdown View">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
