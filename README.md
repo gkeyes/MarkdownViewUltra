@@ -31,18 +31,19 @@
 
 ## 📦 Download
 
-> **Latest release:** [v1.0.1](https://github.com/gkeyes/MarkdownViewUltra/releases/latest)
+> **Latest release:** [v1.0.2](https://github.com/gkeyes/MarkdownViewUltra/releases/latest)
 
 | Version | Size | Download |
 |---------|------|----------|
-| **v1.0.1** (latest) | 16 MB | [app-arm64-v8a-release.apk](https://github.com/gkeyes/MarkdownViewUltra/releases/download/v1.0.1/app-arm64-v8a-release.apk) |
+| **v1.0.2** (latest) | 16 MB | [app-arm64-v8a-release.apk](https://github.com/gkeyes/MarkdownViewUltra/releases/download/v1.0.2/app-arm64-v8a-release.apk) |
+| v1.0.1 | 16 MB | [Releases page](https://github.com/gkeyes/MarkdownViewUltra/releases) |
 | v1.0.0 | 16 MB | [Releases page](https://github.com/gkeyes/MarkdownViewUltra/releases) |
 
 ## 🚀 Quick Start
 
 1. **Download** the latest APK from [Releases](https://github.com/gkeyes/MarkdownViewUltra/releases/latest)
 2. **Install** on your Android device
-3. **Open a `.md` file** — long-press any Markdown file in your file manager → "Open with" → select **Markdown View Ultra"
+3. **Open a `.md` file** — long-press any Markdown file in your file manager → "Open with" → select **Markdown View Ultra**
 
 Or:
 - **Share** a Markdown file from any app → pick Markdown View Ultra
@@ -97,6 +98,7 @@ All source code is in this repository. For the latest updates, check the [Releas
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| **v1.0.2** | 2026-04-30 | Icon center alignment fixed, # symbol improved |
 | **v1.0.1** | 2026-04-30 | R8 enabled, CSS minified, adaptive icon, 16 MB APK |
 | **v1.0.0** | 2026-04-30 | Initial release, Flutter + WebView Markdown preview |
 
