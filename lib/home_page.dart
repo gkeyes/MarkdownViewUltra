@@ -241,6 +241,12 @@ class _HomePageState extends State<HomePage> {
   }
   .markdown-body table td>:last-child { margin-bottom: 0; }
 
+  /* Table code — don't let code's break-spaces override td's nowrap */
+  .markdown-body table th code,
+  .markdown-body table td code {
+    white-space: nowrap;
+  }
+
   .markdown-body .absent { color: #d1242f; }
   .markdown-body .emoji { max-width: none; vertical-align: text-top; background-color: transparent; }
   .markdown-body ::selection { background: ${isDark ? '#3d5afe66' : '#bbdefb'}; }
