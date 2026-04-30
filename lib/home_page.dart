@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   String? _errorMessage;
   bool _isDark = false;
 
-  // Lazy WebView controller — only created when needed
   WebViewController? _webController;
 
   @override
@@ -84,10 +83,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _renderMarkdown(String markdownContent) {
-    // Convert Markdown to HTML
     final htmlBody = md.markdownToHtml(
       markdownContent,
-      extensions: [md.FencedCodeBlockExtension(), md.TableExtension()],
+      extensionSet: md.ExtensionSet.gitHubWeb,
     );
 
     final isDark = _isDark;
@@ -113,13 +111,14 @@ class _HomePageState extends State<HomePage> {
     color: $text; background: $bg;
     padding: 16px; word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
   }
   h1, h2, h3, h4 { color: $heading; margin: 1.2em 0 0.5em; font-weight: 600; line-height: 1.3; }
   h1 { font-size: 1.8em; border-bottom: 1px solid $border; padding-bottom: 0.3em; }
   h2 { font-size: 1.5em; border-bottom: 1px solid $border; padding-bottom: 0.25em; }
   h3 { font-size: 1.25em; }
   p { margin: 0.8em 0; }
-  a { color: $link; }
+  a { color: $link; text-decoration: none; }
   code {
     font-family: "SF Mono", "Fira Code", "Consolas", monospace;
     font-size: 0.9em; padding: 0.2em 0.4em;
@@ -145,7 +144,6 @@ class _HomePageState extends State<HomePage> {
   hr { border: none; border-top: 1px solid $border; margin: 1.5em 0; }
   img { max-width: 100%; height: auto; border-radius: 4px; }
   ::selection { background: ${isDark ? '#3d5afe66' : '#bbdefb'}; }
-  html { scroll-behavior: smooth; }
 </style>
 </head>
 <body>$htmlBody</body>
@@ -169,7 +167,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(_fileName, style: const TextStyle(fontSize: 16)),
