@@ -1,0 +1,18 @@
+# Flutter
+.dart_tool/
+.packages
+build/
+*.iml
+.idea/
+.metadata
+*.lock
+
+# Android
+android/.gradle/
+android/app/build/
+android/local.properties
+*.apk
+*.aab
+
+# macOS
+.DS_Store
