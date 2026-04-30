@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
     line-height: inherit;
   }
 
-  /* ═══════ Tables — GitHub style, self-scrolling ═══════ */
+  /* ═══════ Tables — nowrap + self-scrolling ═══════ */
   .markdown-body table {
     border-spacing: 0;
     border-collapse: collapse;
@@ -229,6 +229,7 @@ class _HomePageState extends State<HomePage> {
   .markdown-body table td {
     padding: 6px 13px;
     border: 1px solid $border;
+    white-space: nowrap;
   }
   .markdown-body table th { font-weight: 600; }
   .markdown-body table tr {
