@@ -45,8 +45,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool _isAllowedFile(String path) {
-    final ext = path.toLowerCase();
-    return _textExtensions.any((e) => ext.endsWith(e));
+    return _textExtensions.any((e) => path.toLowerCase().endsWith(e));
   }
 
   Future<void> _loadFile(String? path) async {
@@ -83,8 +82,8 @@ class _HomePageState extends State<HomePage> {
         return;
       }
 
-      final nonTextCount = content.runes.where((r) => r == 0xFFFD || (r < 0x09 && r != 0x0A && r != 0x0D)).length;
-      if (content.length > 20 && nonTextCount / content.length > 0.3) {
+      final bad = content.runes.where((r) => r == 0xFFFD || (r < 0x09 && r != 0x0A && r != 0x0D)).length;
+      if (content.length > 20 && bad / content.length > 0.3) {
         setState(() {
           _errorMessage = 'This file appears to be a binary document.\nMarkdown View only supports plain text.';
           _isLoading = false;
@@ -103,15 +102,14 @@ class _HomePageState extends State<HomePage> {
     final htmlBody = md.markdownToHtml(markdownContent, extensionSet: md.ExtensionSet.gitHubWeb);
 
     final isDark = _isDark;
-    final bg = isDark ? '#1a1a2e' : '#ffffff';
-    final text = isDark ? '#e0e0e0' : '#1a1a1a';
-    final heading = isDark ? '#ffffff' : '#111111';
-    final codeBg = isDark ? '#2d2d44' : '#f4f4f4';
-    final link = isDark ? '#82b1ff' : '#1565c0';
-    final border = isDark ? '#333355' : '#e0e0e0';
-    final blockquoteBg = isDark ? '#252540' : '#f8f9fa';
-    final tableAlt = isDark ? '#222238' : '#f9fafb';
-    final thBg = isDark ? '#2d2d44' : '#f0f0f0';
+    final fg = isDark ? '#f0f6fc' : '#1f2328';
+    final fgMuted = isDark ? '#9198a1' : '#59636e';
+    final bg = isDark ? '#0d1117' : '#ffffff';
+    final bgMuted = isDark ? '#151b23' : '#f6f8fa';
+    final border = isDark ? '#3d444d' : '#d1d9e0';
+    final borderMuted = isDark ? '#3d444db3' : '#d1d9e0b3';
+    final accent = isDark ? '#4493f8' : '#0969da';
+    final codeBg = isDark ? '#656c7633' : '#818b981f';
 
     final html = '''
 <!DOCTYPE html>
@@ -120,87 +118,138 @@ class _HomePageState extends State<HomePage> {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", "PingFang SC", sans-serif;
+  .markdown-body {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin: 0;
+    color: $fg;
+    background-color: $bg;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-size: 16px;
-    line-height: 1.6;
-    color: $text;
-    background: $bg;
-    padding: 12px 16px 24px;
+    line-height: 1.5;
     word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
-    -webkit-overflow-scrolling: touch;
+    padding: 0 16px 24px;
   }
-  h1, h2, h3, h4 { color: $heading; font-weight: 600; line-height: 1.35; }
-  h1 { font-size: 1.7em; margin: 1.2em 0 0.5em; padding-bottom: 0.25em; border-bottom: 1px solid $border; }
-  h2 { font-size: 1.4em; margin: 1.1em 0 0.4em; padding-bottom: 0.2em; border-bottom: 1px solid $border; }
-  h3 { font-size: 1.2em; margin: 1em 0 0.3em; }
-  h4 { font-size: 1.05em; margin: 0.8em 0 0.2em; }
-  p { margin: 0.6em 0; }
-  a { color: $link; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  code {
-    font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
-    font-size: 0.88em;
-    padding: 0.15em 0.35em;
-    background: $codeBg;
-    border-radius: 3px;
-  }
-  pre {
-    background: $codeBg;
-    border-radius: 6px;
-    padding: 12px 14px;
-    overflow-x: auto;
-    margin: 0.8em 0;
-    -webkit-overflow-scrolling: touch;
-  }
-  pre code { padding: 0; background: none; font-size: 0.85em; line-height: 1.45; }
-  blockquote {
-    border-left: 4px solid ${isDark ? '#82b1ff' : '#1976d2'};
-    background: $blockquoteBg;
-    padding: 0.4em 1em;
-    margin: 0.8em 0;
-    border-radius: 0 6px 6px 0;
-    color: ${isDark ? '#c0c0c0' : '#555'};
-  }
-  blockquote p { margin: 0.3em 0; }
-  ul, ol { padding-left: 1.8em; margin: 0.4em 0; }
-  li { margin: 0.2em 0; }
-  li p { margin: 0.2em 0; }
-  hr { border: none; border-top: 1px solid $border; margin: 1.2em 0; }
-  img { max-width: 100%; height: auto; border-radius: 4px; margin: 0.5em 0; }
-
-  /* ═══════ TABLES — compact, like markdown_widget ═══════ */
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 0.6em 0;
-    font-size: 0.95em;
-    line-height: 1.4;
-  }
-  th, td {
-    border: 1px solid $border;
-    padding: 7px 10px;
-    text-align: left;
-    vertical-align: top;
-    line-height: 1.4;
-  }
-  th {
-    background: $thBg;
+  .markdown-body a { background-color: transparent; color: $accent; text-decoration: none; }
+  .markdown-body a:hover { text-decoration: underline; }
+  .markdown-body a:not([href]) { color: inherit; text-decoration: none; }
+  .markdown-body b, .markdown-body strong { font-weight: 600; }
+  .markdown-body dfn { font-style: italic; }
+  .markdown-body h1 {
+    margin: .67em 0;
     font-weight: 600;
-    white-space: nowrap;
+    padding-bottom: .3em;
+    font-size: 2em;
+    border-bottom: 1px solid $borderMuted;
   }
-  tr:nth-child(even) td {
-    background: $tableAlt;
+  .markdown-body h2 {
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 1.5em;
+    border-bottom: 1px solid $borderMuted;
   }
-  th p, td p { margin: 0; }
-  th code, td code { font-size: 0.9em; }
+  .markdown-body h3 { font-weight: 600; font-size: 1.25em; }
+  .markdown-body h4 { font-weight: 600; font-size: 1em; }
+  .markdown-body h5 { font-weight: 600; font-size: .875em; }
+  .markdown-body h6 { font-weight: 600; font-size: .85em; color: $fgMuted; }
+  .markdown-body h1, .markdown-body h2, .markdown-body h3,
+  .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+  .markdown-body p { margin-top: 0; margin-bottom: 10px; }
+  .markdown-body blockquote {
+    margin: 0; padding: 0 1em;
+    color: $fgMuted;
+    border-left: .25em solid $border;
+  }
+  .markdown-body ul, .markdown-body ol {
+    margin-top: 0; margin-bottom: 0;
+    padding-left: 2em;
+  }
+  .markdown-body ul ul, .markdown-body ul ol,
+  .markdown-body ol ol, .markdown-body ol ul {
+    margin-top: 0; margin-bottom: 0;
+  }
+  .markdown-body li+li { margin-top: .25em; }
+  .markdown-body li>p { margin-top: 1rem; }
+  .markdown-body hr {
+    box-sizing: content-box; overflow: hidden;
+    background: transparent;
+    border-bottom: 1px solid $borderMuted;
+    height: .25em; padding: 0; margin: 1.5rem 0;
+    background-color: $border; border: 0;
+  }
+  .markdown-body img {
+    border-style: none; max-width: 100%;
+    box-sizing: content-box;
+  }
+  .markdown-body code {
+    font-family: "SF Mono", "Fira Code", Consolas, "Liberation Mono", monospace;
+    font-size: 85%;
+    padding: .2em .4em;
+    margin: 0;
+    white-space: break-spaces;
+    background-color: $codeBg;
+    border-radius: 6px;
+  }
+  .markdown-body pre {
+    margin-top: 0; margin-bottom: 0;
+    padding: 1rem;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    color: $fg;
+    background-color: $bgMuted;
+    border-radius: 6px;
+  }
+  .markdown-body pre code {
+    padding: 0; margin: 0;
+    background: transparent; border: 0;
+    font-size: 100%;
+    white-space: pre;
+    word-break: normal;
+    line-height: inherit;
+  }
 
-  ::selection { background: ${isDark ? '#3d5afe66' : '#bbdefb'}; }
+  /* ═══════ Tables — GitHub style, self-scrolling ═══════ */
+  .markdown-body table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+    font-variant: tabular-nums;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .markdown-body table th,
+  .markdown-body table td {
+    padding: 6px 13px;
+    border: 1px solid $border;
+  }
+  .markdown-body table th { font-weight: 600; }
+  .markdown-body table tr {
+    background-color: $bg;
+    border-top: 1px solid $borderMuted;
+  }
+  .markdown-body table tr:nth-child(2n) {
+    background-color: $bgMuted;
+  }
+  .markdown-body table td>:last-child { margin-bottom: 0; }
+
+  .markdown-body .absent { color: #d1242f; }
+  .markdown-body .emoji { max-width: none; vertical-align: text-top; background-color: transparent; }
+  .markdown-body ::selection { background: ${isDark ? '#3d5afe66' : '#bbdefb'}; }
+  .markdown-body>*:first-child { margin-top: 0 !important; }
+  .markdown-body>*:last-child { margin-bottom: 0 !important; }
 </style>
 </head>
-<body>$htmlBody</body>
+<body>
+<div class="markdown-body">$htmlBody</div>
+</body>
 </html>''';
 
     final controller = WebViewController()
@@ -240,7 +289,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildBody(ThemeData theme) {
     if (_isLoading) return const Center(child: CircularProgressIndicator());
-
     if (_errorMessage != null) {
       return Center(
         child: SingleChildScrollView(
@@ -257,15 +305,13 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 24),
               FilledButton.icon(
                 onPressed: () => setState(() { _errorMessage = null; _fileName = 'No file'; }),
-                icon: const Icon(Icons.home),
-                label: const Text('Back to Home'),
+                icon: const Icon(Icons.home), label: const Text('Back to Home'),
               ),
             ],
           ),
         ),
       );
     }
-
     if (_content.isEmpty) {
       return Center(
         child: Padding(
@@ -290,7 +336,6 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
-
     if (_webController != null) return WebViewWidget(controller: _webController!);
     return const Center(child: CircularProgressIndicator());
   }
