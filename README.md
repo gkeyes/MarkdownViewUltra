@@ -83,9 +83,9 @@ This repository uses **GitHub Actions** to build the APK automatically on every 
 
 ## 🏗️ Project Origin
 
-**Markdown View Ultra** is an **original project** — built from scratch as a custom Flutter app, not a fork of any other repository.
+**Markdown View Ultra** is an **original project** — **100% AI-generated** from scratch, not a fork of any other repository. The entire codebase was created by AI, with no human-written code.
 
-The app was developed with:
+Tech stack:
 - **Flutter** — cross-platform UI framework
 - **flutter_markdown** — Markdown parsing & rendering
 - **WebView** — HTML rendering with custom CSS
