@@ -83,7 +83,7 @@ APK 生成在 `build/app/outputs/flutter-apk/` 目录。
 
 ## 🏗️ 项目来源
 
-**Markdown View Ultra** 是一个 **原创项目** —— 从头构建的 Flutter 应用，并非任何其他仓库的 Fork。
+**Markdown View Ultra** 是一个 **原创项目** —— **100% 纯 AI 生成**，从头构建，并非任何其他仓库的 Fork。整个代码库由 AI 编写，不含人工编写的代码。
 
 技术栈：
 - **Flutter** — 跨平台 UI 框架
