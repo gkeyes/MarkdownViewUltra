@@ -252,7 +252,7 @@ class _HomePageState extends State<HomePage> {
   void _showFileInfo(BuildContext context) {
     showAboutDialog(
       context: context, applicationName: 'Markdown View',
-      applicationVersion: '1.0.0', applicationLegalese: 'A lightweight Markdown previewer',
+      applicationVersion: '1.0.1', applicationLegalese: 'A lightweight Markdown previewer',
     );
   }
 }
