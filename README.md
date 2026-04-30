@@ -7,6 +7,8 @@
 > **A lightweight, ultra-slim Markdown previewer APK for Android.**
 > Open `.md` / `.markdown` / `.txt` files via Android's "Share" or "Open with" — instant preview, no editing clutter.
 
+**English** | [简体中文](README.zh-CN.md)
+
 ---
 
 ## ✨ Features
