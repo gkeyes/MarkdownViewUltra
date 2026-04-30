@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:markdown/markdown.dart' as md;
@@ -13,6 +14,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static const _channel = MethodChannel('com.gkeyes.markdownviewultra/intent');
+
+  static const _textExtensions = {'.md', '.markdown', '.txt', '.text'};
 
   String _content = '';
   String _fileName = 'No file';
@@ -47,6 +50,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  bool _isAllowedFile(String path) {
+    final ext = path.toLowerCase();
+    return _textExtensions.any((e) => ext.endsWith(e));
+  }
+
   Future<void> _loadFile(String? path) async {
     if (path == null || path.isEmpty) {
       setState(() => _errorMessage = 'No file path provided');
@@ -58,25 +66,73 @@ class _HomePageState extends State<HomePage> {
       _errorMessage = null;
     });
 
+    // 1️⃣ Extension whitelist check
+    if (!_isAllowedFile(path)) {
+      final ext = path.split('.').last;
+      setState(() {
+        _errorMessage =
+            'Unsupported file format ".$ext".\n\n'
+            'Markdown View can only preview:\n'
+            '\u2022 .md / .markdown  (Markdown files)\n'
+            '\u2022 .txt / .text     (plain text files)\n\n'
+            'This file appears to be a ".$ext" document.\n'
+            'Please open it with an appropriate app.';
+        _isLoading = false;
+      });
+      return;
+    }
+
     try {
       final file = File(path);
-      if (await file.exists()) {
-        final content = await file.readAsString();
+      if (!await file.exists()) {
         setState(() {
-          _content = content;
-          _fileName = file.path.split('/').last;
+          _errorMessage = 'File not found: ${path.split('/').last}';
           _isLoading = false;
         });
-        _renderMarkdown(content);
-      } else {
-        setState(() {
-          _errorMessage = 'File not found: $path';
-          _isLoading = false;
-        });
+        return;
       }
+
+      // 2️⃣ Try UTF-8 decode — will fail on binary files like .docx
+      String content;
+      try {
+        content = await file.readAsString(encoding: utf8);
+      } on FileSystemException {
+        setState(() {
+          _errorMessage =
+              'Cannot preview this file.\n\n'
+              'This doesn\'t appear to be a valid text file. '
+              'Markdown View can only read plain text and Markdown (.md) files.\n\n'
+              'Binary files like .docx, .pdf, or images cannot be displayed.';
+          _isLoading = false;
+        });
+        return;
+      }
+
+      // 3️⃣ Sanity check the content for binary patterns
+      final nonTextCount = content.runes
+          .where((r) => r == 0xFFFD || (r < 0x09 && r != 0x0A && r != 0x0D))
+          .length;
+      if (content.length > 20 && nonTextCount / content.length > 0.3) {
+        setState(() {
+          _errorMessage =
+              'This file appears to be a binary document, not plain text.\n\n'
+              'Markdown View can only preview:\n'
+              '\u2022 .md / .markdown  (Markdown files)\n'
+              '\u2022 .txt / .text     (plain text files)';
+          _isLoading = false;
+        });
+        return;
+      }
+
+      setState(() {
+        _content = content;
+        _fileName = file.path.split('/').last;
+        _isLoading = false;
+      });
+      _renderMarkdown(content);
     } catch (e) {
       setState(() {
-        _errorMessage = 'Error reading file: $e';
+        _errorMessage = 'Error: ${e.toString().split('\n').first}';
         _isLoading = false;
       });
     }
@@ -113,32 +169,20 @@ class _HomePageState extends State<HomePage> {
     -webkit-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
   }
-  h1, h2, h3, h4 { color: $heading; margin: 1.2em 0 0.5em; font-weight: 600; line-height: 1.3; }
+  h1,h2,h3,h4 { color: $heading; margin: 1.2em 0 0.5em; font-weight: 600; line-height: 1.3; }
   h1 { font-size: 1.8em; border-bottom: 1px solid $border; padding-bottom: 0.3em; }
   h2 { font-size: 1.5em; border-bottom: 1px solid $border; padding-bottom: 0.25em; }
   h3 { font-size: 1.25em; }
   p { margin: 0.8em 0; }
   a { color: $link; text-decoration: none; }
-  code {
-    font-family: "SF Mono", "Fira Code", "Consolas", monospace;
-    font-size: 0.9em; padding: 0.2em 0.4em;
-    background: $codeBg; border-radius: 4px;
-  }
-  pre {
-    background: $codeBg; border-radius: 8px; padding: 14px 16px;
-    overflow-x: auto; margin: 1em 0;
-    -webkit-overflow-scrolling: touch;
-  }
+  code { font-family: "SF Mono","Fira Code","Consolas",monospace; font-size: 0.9em; padding: 0.2em 0.4em; background: $codeBg; border-radius: 4px; }
+  pre { background: $codeBg; border-radius: 8px; padding: 14px 16px; overflow-x: auto; margin: 1em 0; -webkit-overflow-scrolling: touch; }
   pre code { padding: 0; background: none; font-size: 0.85em; }
-  blockquote {
-    border-left: 4px solid ${isDark ? '#82b1ff' : '#1976d2'};
-    background: $blockquoteBg; padding: 0.5em 1em;
-    margin: 1em 0; border-radius: 0 8px 8px 0;
-  }
-  ul, ol { padding-left: 2em; margin: 0.6em 0; }
+  blockquote { border-left: 4px solid ${isDark ? '#82b1ff' : '#1976d2'}; background: $blockquoteBg; padding: 0.5em 1em; margin: 1em 0; border-radius: 0 8px 8px 0; }
+  ul,ol { padding-left: 2em; margin: 0.6em 0; }
   li { margin: 0.3em 0; }
   table { border-collapse: collapse; width: 100%; margin: 1em 0; }
-  th, td { border: 1px solid $border; padding: 8px 12px; text-align: left; }
+  th,td { border: 1px solid $border; padding: 8px 12px; text-align: left; }
   th { background: ${isDark ? '#2d2d44' : '#f0f0f0'}; font-weight: 600; }
   tr:nth-child(even) { background: ${isDark ? '#222238' : '#fafafa'}; }
   hr { border: none; border-top: 1px solid $border; margin: 1.5em 0; }
@@ -191,20 +235,28 @@ class _HomePageState extends State<HomePage> {
 
     if (_errorMessage != null) {
       return Center(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.error_outline, size: 64, color: theme.colorScheme.error),
+              Icon(Icons.insert_drive_file_outlined, size: 64,
+                color: theme.colorScheme.error.withAlpha(180)),
               const SizedBox(height: 16),
-              Text(_errorMessage!, textAlign: TextAlign.center,
-                style: TextStyle(color: theme.colorScheme.error)),
+              Text('Unable to Preview',
+                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 12),
+              Text(_errorMessage!,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  height: 1.5,
+                )),
               const SizedBox(height: 24),
               FilledButton.icon(
-                onPressed: _checkForIntent,
-                icon: const Icon(Icons.refresh),
-                label: const Text('Retry'),
+                onPressed: () => setState(() { _errorMessage = null; _fileName = 'No file'; }),
+                icon: const Icon(Icons.home),
+                label: const Text('Back to Home'),
               ),
             ],
           ),
