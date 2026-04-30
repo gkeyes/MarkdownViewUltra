@@ -31,11 +31,12 @@
 
 ## 📦 下载
 
-> **最新版本：** [v1.0.1](https://github.com/gkeyes/MarkdownViewUltra/releases/latest)
+> **最新版本：** [v1.0.2](https://github.com/gkeyes/MarkdownViewUltra/releases/latest)
 
 | 版本 | 大小 | 下载 |
 |------|------|------|
-| **v1.0.1** (最新) | 16 MB | [app-arm64-v8a-release.apk](https://github.com/gkeyes/MarkdownViewUltra/releases/download/v1.0.1/app-arm64-v8a-release.apk) |
+| **v1.0.2** (最新) | 16 MB | [app-arm64-v8a-release.apk](https://github.com/gkeyes/MarkdownViewUltra/releases/download/v1.0.2/app-arm64-v8a-release.apk) |
+| v1.0.1 | 16 MB | [Releases 页面](https://github.com/gkeyes/MarkdownViewUltra/releases) |
 | v1.0.0 | 16 MB | [Releases 页面](https://github.com/gkeyes/MarkdownViewUltra/releases) |
 
 ## 🚀 快速开始
@@ -97,6 +98,7 @@ APK 生成在 `build/app/outputs/flutter-apk/` 目录。
 
 | 版本 | 日期 | 亮点 |
 |------|------|------|
+| **v1.0.2** | 2026-04-30 | 图标居中修复，# 符号优化 |
 | **v1.0.1** | 2026-04-30 | 开启 R8 压缩、CSS 压缩、自适应图标，APK 16MB |
 | **v1.0.0** | 2026-04-30 | 初始发布，Flutter + WebView Markdown 预览 |
 
