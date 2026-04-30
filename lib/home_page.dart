@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.markdown_copy,
+                Icons.description,
                 size: 80,
                 color: theme.colorScheme.primary.withAlpha(100),
               ),
@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        checkbox: theme.checkboxTheme,
+        checkbox: theme.textTheme.bodyMedium,
       ),
       onTapLink: (text, href, title) {
         if (href != null) {
