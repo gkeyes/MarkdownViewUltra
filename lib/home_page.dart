@@ -112,146 +112,48 @@ class _HomePageState extends State<HomePage> {
     final codeBg = isDark ? '#656c7633' : '#818b981f';
 
     final html = '''
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <style>
-  .markdown-body {
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    margin: 0;
-    color: $fg;
-    background-color: $bg;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    font-size: 15px;
-    line-height: 1.45;
-    word-wrap: break-word;
-    padding: 0 14px 18px;
-  }
-  .markdown-body a { background-color: transparent; color: $accent; text-decoration: none; }
-  .markdown-body a:hover { text-decoration: underline; }
-  .markdown-body a:not([href]) { color: inherit; text-decoration: none; }
-  .markdown-body b, .markdown-body strong { font-weight: 600; }
-  .markdown-body dfn { font-style: italic; }
-  .markdown-body h1 {
-    margin: .6em 0 .3em;
-    font-weight: 600;
-    padding-bottom: .25em;
-    font-size: 1.7em;
-    border-bottom: 1px solid $borderMuted;
-  }
-  .markdown-body h2 {
-    font-weight: 600;
-    padding-bottom: .25em;
-    font-size: 1.35em;
-    border-bottom: 1px solid $borderMuted;
-  }
-  .markdown-body h3 { font-weight: 600; font-size: 1.15em; }
-  .markdown-body h4 { font-weight: 600; font-size: 1em; }
-  .markdown-body h5 { font-weight: 600; font-size: .875em; }
-  .markdown-body h6 { font-weight: 600; font-size: .85em; color: $fgMuted; }
-  .markdown-body h1, .markdown-body h2, .markdown-body h3,
-  .markdown-body h4, .markdown-body h5, .markdown-body h6 {
-    margin-top: 1.2rem;
-    margin-bottom: .5rem;
-    line-height: 1.25;
-  }
-  .markdown-body p { margin-top: 0; margin-bottom: 8px; }
-  .markdown-body blockquote {
-    margin: 0; padding: 0 .8em;
-    color: $fgMuted;
-    border-left: .2em solid $border;
-  }
-  .markdown-body ul, .markdown-body ol {
-    margin-top: 0; margin-bottom: 0;
-    padding-left: 1.5em;
-  }
-  .markdown-body ul ul, .markdown-body ul ol,
-  .markdown-body ol ol, .markdown-body ol ul {
-    margin-top: 0; margin-bottom: 0;
-  }
-  .markdown-body li+li { margin-top: .15em; }
-  .markdown-body li>p { margin-top: .6rem; }
-  .markdown-body hr {
-    box-sizing: content-box; overflow: hidden;
-    background: transparent;
-    border-bottom: 1px solid $borderMuted;
-    height: .2em; padding: 0; margin: 1rem 0;
-    background-color: $border; border: 0;
-  }
-  .markdown-body img {
-    border-style: none; max-width: 100%;
-    box-sizing: content-box;
-  }
-  .markdown-body code {
-    font-family: "SF Mono", "Fira Code", Consolas, "Liberation Mono", monospace;
-    font-size: 80%;
-    padding: .15em .35em;
-    margin: 0;
-    white-space: break-spaces;
-    background-color: $codeBg;
-    border-radius: 4px;
-  }
-  .markdown-body pre {
-    margin-top: 0; margin-bottom: 0;
-    padding: .75rem;
-    overflow: auto;
-    font-size: 80%;
-    line-height: 1.4;
-    color: $fg;
-    background-color: $bgMuted;
-    border-radius: 6px;
-  }
-  .markdown-body pre code {
-    padding: 0; margin: 0;
-    background: transparent; border: 0;
-    font-size: 100%;
-    white-space: pre;
-    word-break: normal;
-    line-height: inherit;
-  }
-
-  /* ─── Tables — compact, nowrap, auto-scroll ─── */
-  .markdown-body table {
-    border-spacing: 0;
-    border-collapse: collapse;
-    display: block;
-    width: max-content;
-    max-width: 100%;
-    overflow: auto;
-    font-variant: tabular-nums;
-    margin-top: 0;
-    margin-bottom: .8rem;
-  }
-  .markdown-body table th,
-  .markdown-body table td {
-    padding: 4px 9px;
-    border: 1px solid $border;
-    white-space: nowrap;
-  }
-  .markdown-body table th { font-weight: 600; }
-  .markdown-body table tr {
-    background-color: $bg;
-    border-top: 1px solid $borderMuted;
-  }
-  .markdown-body table tr:nth-child(2n) {
-    background-color: $bgMuted;
-  }
-  .markdown-body table td>:last-child { margin-bottom: 0; }
-
-  /* Table code — override code's break-spaces */
-  .markdown-body table th code,
-  .markdown-body table td code {
-    white-space: nowrap;
-  }
-
-  .markdown-body .absent { color: #d1242f; }
-  .markdown-body .emoji { max-width: none; vertical-align: text-top; background-color: transparent; }
-  .markdown-body ::selection { background: ${isDark ? '#3d5afe66' : '#bbdefb'}; }
-  .markdown-body>*:first-child { margin-top: 0 !important; }
-  .markdown-body>*:last-child { margin-bottom: 0 !important; }
+.markdown-body{margin:0;color:$fg;background:$bg;font:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.45;word-wrap:break-word;padding:0 14px 18px}
+.markdown-body a{background:0 0;color:$accent;text-decoration:none}
+.markdown-body a:hover{text-decoration:underline}
+.markdown-body a:not([href]){color:inherit;text-decoration:none}
+.markdown-body b,.markdown-body strong{font-weight:600}
+.markdown-body dfn{font-style:italic}
+.markdown-body h1,.markdown-body h2{border-bottom:1px solid $borderMuted;font-weight:600;padding-bottom:.25em}
+.markdown-body h1{margin:.6em 0 .3em;font-size:1.7em}
+.markdown-body h2{font-size:1.35em}
+.markdown-body h3{font-weight:600;font-size:1.15em}
+.markdown-body h4{font-weight:600;font-size:1em}
+.markdown-body h5{font-weight:600;font-size:.875em}
+.markdown-body h6{font-weight:600;font-size:.85em;color:$fgMuted}
+.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:1.2rem;margin-bottom:.5rem;line-height:1.25}
+.markdown-body p{margin-top:0;margin-bottom:8px}
+.markdown-body blockquote{margin:0;padding:0 .8em;color:$fgMuted;border-left:.2em solid $border}
+.markdown-body ul,.markdown-body ol{margin-top:0;margin-bottom:0;padding-left:1.5em}
+.markdown-body ul ul,.markdown-body ul ol,.markdown-body ol ol,.markdown-body ol ul{margin-top:0;margin-bottom:0}
+.markdown-body li+li{margin-top:.15em}
+.markdown-body li>p{margin-top:.6rem}
+.markdown-body hr{box-sizing:content-box;overflow:hidden;background:0 0;border-bottom:1px solid $borderMuted;height:.2em;padding:0;margin:1rem 0;background-color:$border;border:0}
+.markdown-body img{border-style:none;max-width:100%;box-sizing:content-box}
+.markdown-body code{font-family:"SF Mono","Fira Code",Consolas,"Liberation Mono",monospace;font-size:80%;padding:.15em .35em;margin:0;white-space:break-spaces;background-color:$codeBg;border-radius:4px}
+.markdown-body pre{margin:0;padding:.75rem;overflow:auto;font-size:80%;line-height:1.4;color:$fg;background-color:$bgMuted;border-radius:6px}
+.markdown-body pre code{padding:0;margin:0;background:0 0;border:0;font-size:100%;white-space:pre;word-break:normal;line-height:inherit}
+.markdown-body table{border-spacing:0;border-collapse:collapse;display:block;width:max-content;max-width:100%;overflow:auto;font-variant:tabular-nums;margin:0 0 .8rem}
+.markdown-body table th,.markdown-body table td{padding:4px 9px;border:1px solid $border;white-space:nowrap}
+.markdown-body table th{font-weight:600}
+.markdown-body table tr{background-color:$bg;border-top:1px solid $borderMuted}
+.markdown-body table tr:nth-child(2n){background-color:$bgMuted}
+.markdown-body table td>:last-child{margin-bottom:0}
+.markdown-body table th code,.markdown-body table td code{white-space:nowrap}
+.markdown-body .absent{color:#d1242f}
+.markdown-body .emoji{max-width:none;vertical-align:text-top;background:0 0}
+.markdown-body ::selection{background:${isDark ? '#3d5afe66' : '#bbdefb'}}
+.markdown-body>*:first-child{margin-top:0!important}
+.markdown-body>*:last-child{margin-bottom:0!important}
 </style>
 </head>
 <body>
