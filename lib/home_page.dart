@@ -143,8 +143,8 @@ class _HomePageState extends State<HomePage> {
 .markdown-body pre{margin:0;padding:.75rem;overflow:auto;font-size:80%;line-height:1.4;color:$fg;background-color:$bgMuted;border-radius:6px}
 .markdown-body pre code{padding:0;margin:0;background:0 0;border:0;font-size:100%;white-space:pre;word-break:normal;line-height:inherit}
 .markdown-body table{border-spacing:0;border-collapse:collapse;display:block;width:max-content;max-width:100%;overflow:auto;font-variant:tabular-nums;margin:0 0 .8rem}
-.markdown-body table th,.markdown-body table td{padding:4px 9px;border:1px solid $border;white-space:nowrap}
-.markdown-body table th{font-weight:600}
+.markdown-body table th,.markdown-body table td{padding:4px 9px;border:1px solid $border;white-space:nowrap;color:$fg}
+.markdown-body table th{font-weight:600;background-color:$bgMuted}
 .markdown-body table tr{background-color:$bg;border-top:1px solid $borderMuted}
 .markdown-body table tr:nth-child(2n){background-color:$bgMuted}
 .markdown-body table td>:last-child{margin-bottom:0}
